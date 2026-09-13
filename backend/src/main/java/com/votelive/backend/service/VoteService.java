@@ -1,5 +1,7 @@
 package com.votelive.backend.service;
 
+import com.votelive.backend.dto.AdminVoteResponse;
+import com.votelive.backend.dto.VoteHistoryResponse;
 import com.votelive.backend.entity.Contestant;
 import com.votelive.backend.entity.Show;
 import com.votelive.backend.entity.User;
@@ -9,6 +11,8 @@ import com.votelive.backend.repository.ShowRepository;
 import com.votelive.backend.repository.UserRepository;
 import com.votelive.backend.repository.VoteRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class VoteService {
@@ -108,5 +112,55 @@ public class VoteService {
                 user.getId(),
                 showId
         ).orElse(null);
+    }
+
+    // Get all votes made by the currently logged-in user
+    public List<VoteHistoryResponse> getMyVotes(String email) {
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() ->
+                        new RuntimeException("User not found")
+                );
+
+        List<Vote> votes =
+                voteRepository.findByUserIdOrderByVotedAtDesc(
+                        user.getId()
+                );
+
+        return votes.stream()
+                .map(vote -> new VoteHistoryResponse(
+                        vote.getId(),
+                        vote.getShow().getId(),
+                        vote.getShow().getTitle(),
+                        vote.getContestant().getId(),
+                        vote.getContestant().getName(),
+                        vote.getVotedAt()
+                ))
+                .toList();
+    }
+
+    // Get all votes for the admin
+    public List<AdminVoteResponse> getAllVotesForAdmin() {
+
+        List<Vote> votes =
+                voteRepository.findAllVotesForAdmin();
+
+        return votes.stream()
+                .map(vote -> new AdminVoteResponse(
+                        vote.getId(),
+
+                        vote.getUser().getId(),
+                        vote.getUser().getName(),
+                        vote.getUser().getEmail(),
+
+                        vote.getShow().getId(),
+                        vote.getShow().getTitle(),
+
+                        vote.getContestant().getId(),
+                        vote.getContestant().getName(),
+
+                        vote.getVotedAt()
+                ))
+                .toList();
     }
 }

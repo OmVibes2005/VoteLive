@@ -7,6 +7,7 @@ import com.votelive.backend.service.VoteResultService;
 import com.votelive.backend.service.VoteService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -97,6 +98,56 @@ public class VoteController {
                         "votedAt", vote.getVotedAt()
                 )
         );
+    }
+
+    /*
+     * Get all votes made by the currently logged-in user.
+     */
+    @GetMapping("/my-votes")
+    public ResponseEntity<?> getMyVotes(
+            Authentication authentication) {
+
+        try {
+            return ResponseEntity.ok(
+                    voteService.getMyVotes(
+                            authentication.getName()
+                    )
+            );
+
+        } catch (RuntimeException exception) {
+
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of(
+                            "error",
+                            exception.getMessage()
+                    ));
+        }
+    }
+
+    /*
+     * Get all votes in the system.
+     * Admin access only.
+     */
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/admin")
+    public ResponseEntity<?> getAllVotesForAdmin(
+            Authentication authentication) {
+
+        try {
+            return ResponseEntity.ok(
+                    voteService.getAllVotesForAdmin()
+            );
+
+        } catch (RuntimeException exception) {
+
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of(
+                            "error",
+                            exception.getMessage()
+                    ));
+        }
     }
 
     @GetMapping("/analytics/show/{showId}")

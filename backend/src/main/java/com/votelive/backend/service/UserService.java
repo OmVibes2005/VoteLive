@@ -1,6 +1,6 @@
 package com.votelive.backend.service;
-import com.votelive.backend.dto.LoginResponse;
 
+import com.votelive.backend.dto.LoginResponse;
 import com.votelive.backend.dto.RegisterRequest;
 import com.votelive.backend.entity.Role;
 import com.votelive.backend.entity.User;
@@ -15,9 +15,10 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
 
-    public UserService(UserRepository userRepository,
-                       PasswordEncoder passwordEncoder,
-                       JwtService jwtService) {
+    public UserService(
+            UserRepository userRepository,
+            PasswordEncoder passwordEncoder,
+            JwtService jwtService) {
 
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -49,14 +50,23 @@ public class UserService {
                 .orElseThrow(() ->
                         new RuntimeException("Invalid email or password"));
 
-        if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new RuntimeException("Invalid email or password");
+        if (!passwordEncoder.matches(
+                password,
+                user.getPassword())) {
+
+            throw new RuntimeException(
+                    "Invalid email or password"
+            );
         }
 
-        String token = jwtService.generateToken(user.getEmail());
+        String token =
+                jwtService.generateToken(user.getEmail());
 
         return new LoginResponse(
                 token,
+                user.getId(),
+                user.getName(),
+                user.getEmail(),
                 user.getRole().name()
         );
     }
