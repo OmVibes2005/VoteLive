@@ -7,14 +7,24 @@ import {
 } from "react-router-dom";
 
 import Login from "./pages/Login";
+import Register from "./pages/Register";
+
 import UserDashboard from "./pages/UserDashboard";
-import ProtectedRoute from "./components/ProtectedRoute";
+import MyVotes from "./pages/MyVotes";
 import ShowPage from "./pages/ShowPage";
-import "./App.css";
+
+import ProtectedRoute from "./components/ProtectedRoute";
+import AdminRoute from "./components/AdminRoute";
+
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminShows from "./pages/AdminShows";
 import AdminContestants from "./pages/AdminContestants";
 import AdminVoting from "./pages/AdminVoting";
+import AdminVoteManagement from "./pages/AdminVoteManagement";
+
+
+import "./App.css";
+
 
 function Home() {
     const navigate = useNavigate();
@@ -42,6 +52,7 @@ function Home() {
     );
 }
 
+
 function App() {
     return (
         <BrowserRouter>
@@ -59,10 +70,12 @@ function App() {
                     element={<Login />}
                 />
 
+                {/* Registration */}
                 <Route
-                    path="/admin/voting"
-                    element={<AdminVoting />}
+                    path="/register"
+                    element={<Register />}
                 />
+
 
                 {/* Protected User Dashboard */}
                 <Route
@@ -74,20 +87,57 @@ function App() {
                     }
                 />
 
+                {/* User Vote History */}
+                <Route
+                    path="/my-votes"
+                    element={
+                        <ProtectedRoute>
+                            <MyVotes />
+                        </ProtectedRoute>
+                    }
+                />
+
+
+                {/* Admin Dashboard */}
                 <Route
                     path="/admin"
-                    element={<AdminDashboard />}
+                    element={
+                        <AdminRoute>
+                            <AdminDashboard />
+                        </AdminRoute>
+                    }
                 />
 
+                {/* Admin Contestants */}
                 <Route
                     path="/admin/contestants"
-                    element={<AdminContestants />}
+                    element={
+                        <AdminRoute>
+                            <AdminContestants />
+                        </AdminRoute>
+                    }
                 />
 
+                {/* Admin Shows */}
                 <Route
                     path="/admin/shows"
-                    element={<AdminShows />}
+                    element={
+                        <AdminRoute>
+                            <AdminShows />
+                        </AdminRoute>
+                    }
                 />
+
+                {/* Admin Voting */}
+                <Route
+                    path="/admin/voting"
+                    element={
+                        <AdminRoute>
+                            <AdminVoting />
+                        </AdminRoute>
+                    }
+                />
+
 
                 {/* Show Page */}
                 <Route
@@ -103,6 +153,16 @@ function App() {
                 <Route
                     path="*"
                     element={<Navigate to="/" replace />}
+                />
+
+                {/* Admin Vote Management */}
+                <Route
+                    path="/admin/votes"
+                    element={
+                        <AdminRoute>
+                            <AdminVoteManagement />
+                        </AdminRoute>
+                    }
                 />
 
             </Routes>

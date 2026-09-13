@@ -1,0 +1,1119 @@
+/* =========================================================
+   VOTELIVE — MY VOTES
+   ========================================================= */
+
+.my-votes-page {
+    min-height: 100vh;
+
+    padding-bottom: 70px;
+
+    background:
+            radial-gradient(
+                    circle at 90% 0%,
+                    rgba(37, 99, 235, 0.07),
+                    transparent 28%
+            ),
+            #f8fafc;
+
+    color: #111827;
+
+    font-family:
+            Inter,
+            -apple-system,
+            BlinkMacSystemFont,
+            "Segoe UI",
+            Roboto,
+            Arial,
+            sans-serif;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.my-votes-header {
+    position: sticky;
+
+    top: 0;
+
+    z-index: 50;
+
+    background: rgba(15, 23, 42, 0.97);
+
+    border-bottom: 1px solid
+    rgba(255, 255, 255, 0.08);
+
+    box-shadow:
+            0 4px 20px
+            rgba(15, 23, 42, 0.12);
+}
+
+.my-votes-header-inner {
+    width: min(1180px, calc(100% - 48px));
+
+    min-height: 70px;
+
+    margin: 0 auto;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+
+/* =========================================================
+   BRAND
+   ========================================================= */
+
+.my-votes-brand {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 0;
+
+    border: none;
+
+    background: transparent;
+
+    color: #ffffff;
+
+    cursor: pointer;
+}
+
+.my-votes-brand-icon {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 11px;
+
+    background:
+            rgba(255, 255, 255, 0.10);
+
+    font-size: 20px;
+}
+
+.my-votes-brand h1 {
+    margin: 0;
+
+    font-size: 21px;
+
+    font-weight: 800;
+
+    letter-spacing: -0.5px;
+}
+
+.my-votes-brand p {
+    margin: 2px 0 0;
+
+    color: #94a3b8;
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.8px;
+}
+
+
+/* =========================================================
+   HEADER ACTIONS
+   ========================================================= */
+
+.my-votes-header-actions {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+.my-votes-back-button {
+    height: 38px;
+
+    padding: 0 14px;
+
+    border: 1px solid
+    rgba(255, 255, 255, 0.14);
+
+    border-radius: 8px;
+
+    background:
+            rgba(255, 255, 255, 0.06);
+
+    color: #e2e8f0;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.my-votes-back-button:hover {
+    background:
+            rgba(255, 255, 255, 0.12);
+
+    border-color:
+            rgba(255, 255, 255, 0.22);
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.my-votes-content {
+    width: min(1180px, calc(100% - 48px));
+
+    margin: 0 auto;
+
+    padding: 40px 0 0;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.my-votes-hero {
+    min-height: 190px;
+
+    padding: 35px 40px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 30px;
+
+    border: 1px solid #dbeafe;
+
+    border-radius: 18px;
+
+    background:
+            linear-gradient(
+                    135deg,
+                    #ffffff,
+                    #eff6ff
+            );
+
+    box-shadow:
+            0 8px 25px
+            rgba(15, 23, 42, 0.06);
+
+    overflow: hidden;
+
+    position: relative;
+}
+
+.my-votes-hero::after {
+    content: "";
+
+    position: absolute;
+
+    width: 230px;
+    height: 230px;
+
+    right: -80px;
+    top: -100px;
+
+    border-radius: 50%;
+
+    background:
+            rgba(37, 99, 235, 0.07);
+}
+
+.my-votes-hero > div:first-child {
+    position: relative;
+
+    z-index: 2;
+}
+
+.my-votes-eyebrow {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #2563eb;
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.1px;
+}
+
+.my-votes-hero h2 {
+    margin: 0 0 9px;
+
+    color: #0f172a;
+
+    font-size: clamp(28px, 4vw, 36px);
+
+    font-weight: 800;
+
+    letter-spacing: -0.8px;
+}
+
+.my-votes-hero p {
+    max-width: 650px;
+
+    margin: 0;
+
+    color: #64748b;
+
+    font-size: 14px;
+
+    line-height: 1.7;
+}
+
+.my-votes-hero p strong {
+    color: #334155;
+}
+
+.my-votes-hero-icon {
+    width: 105px;
+    height: 105px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 25px;
+
+    background:
+            rgba(37, 99, 235, 0.10);
+
+    font-size: 45px;
+
+    position: relative;
+
+    z-index: 2;
+}
+
+
+/* =========================================================
+   SUMMARY CARDS
+   ========================================================= */
+
+.vote-summary {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 15px;
+
+    margin-top: 22px;
+}
+
+.summary-card {
+    min-height: 82px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 15px 17px;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 12px;
+
+    box-shadow:
+            0 3px 12px
+            rgba(15, 23, 42, 0.04);
+}
+
+.summary-icon {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 11px;
+
+    background: #eff6ff;
+
+    font-size: 18px;
+}
+
+.summary-card div {
+    display: flex;
+
+    flex-direction: column;
+}
+
+.summary-card strong {
+    color: #0f172a;
+
+    font-size: 18px;
+
+    font-weight: 800;
+}
+
+.summary-card span:last-child {
+    margin-top: 2px;
+
+    color: #64748b;
+
+    font-size: 10px;
+
+    font-weight: 650;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.4px;
+}
+
+
+/* =========================================================
+   VOTE HISTORY SECTION
+   ========================================================= */
+
+.vote-history-section {
+    margin-top: 45px;
+}
+
+.vote-history-heading {
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 20px;
+}
+
+.vote-history-heading h3 {
+    margin: 0 0 5px;
+
+    color: #111827;
+
+    font-size: 23px;
+
+    font-weight: 750;
+
+    letter-spacing: -0.4px;
+}
+
+.vote-history-heading p {
+    margin: 0;
+
+    color: #64748b;
+
+    font-size: 13px;
+}
+
+.vote-history-count {
+    padding: 7px 11px;
+
+    border: 1px solid #dbeafe;
+
+    border-radius: 20px;
+
+    background: #eff6ff;
+
+    color: #2563eb;
+
+    font-size: 10px;
+
+    font-weight: 750;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   HISTORY LIST
+   ========================================================= */
+
+.vote-history-list {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+
+/* =========================================================
+   HISTORY CARD
+   ========================================================= */
+
+.vote-history-card {
+    min-height: 105px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    padding: 17px 19px;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 13px;
+
+    box-shadow:
+            0 3px 12px
+            rgba(15, 23, 42, 0.04);
+
+    transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease,
+            border-color 0.2s ease;
+}
+
+.vote-history-card:hover {
+    transform: translateY(-2px);
+
+    border-color: #bfdbfe;
+
+    box-shadow:
+            0 8px 20px
+            rgba(15, 23, 42, 0.07);
+}
+
+
+/* =========================================================
+   NUMBER
+   ========================================================= */
+
+.vote-number {
+    width: 38px;
+    height: 38px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: #f1f5f9;
+
+    color: #64748b;
+
+    font-size: 11px;
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   MAIN INFORMATION
+   ========================================================= */
+
+.vote-history-main {
+    flex: 1;
+
+    min-width: 0;
+
+    display: grid;
+
+    grid-template-columns:
+        1.2fr 1fr 1fr;
+
+    gap: 25px;
+
+    align-items: center;
+}
+
+.vote-history-block {
+    min-width: 0;
+}
+
+.vote-label {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #94a3b8;
+
+    font-size: 8px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.9px;
+}
+
+.vote-history-block h4 {
+    margin: 0;
+
+    overflow: hidden;
+
+    color: #111827;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   CONTESTANT
+   ========================================================= */
+
+.contestant-name {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    color: #334155;
+
+    font-size: 13px;
+
+    font-weight: 650;
+}
+
+.contestant-icon {
+    width: 26px;
+    height: 26px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background: #eff6ff;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   DATE
+   ========================================================= */
+
+.vote-date {
+    color: #64748b;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   ACTION
+   ========================================================= */
+
+.vote-history-action {
+    flex-shrink: 0;
+}
+
+.vote-history-action button {
+    min-height: 38px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    padding: 0 13px;
+
+    border: 1px solid #dbeafe;
+
+    border-radius: 8px;
+
+    background: #eff6ff;
+
+    color: #2563eb;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.vote-history-action button:hover {
+    background: #dbeafe;
+
+    border-color: #bfdbfe;
+
+    transform: translateY(-1px);
+}
+
+.vote-history-action button span {
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.my-votes-state {
+    min-height: 360px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+}
+
+.my-votes-spinner {
+    width: 34px;
+    height: 34px;
+
+    margin-bottom: 18px;
+
+    border: 3px solid #dbeafe;
+
+    border-top-color: #2563eb;
+
+    border-radius: 50%;
+
+    animation:
+            my-votes-spin 0.8s linear infinite;
+}
+
+@keyframes my-votes-spin {
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+.my-votes-state h3 {
+    margin: 0 0 5px;
+
+    color: #111827;
+
+    font-size: 16px;
+}
+
+.my-votes-state p {
+    margin: 0;
+
+    color: #64748b;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   ERROR
+   ========================================================= */
+
+.my-votes-error {
+    max-width: 500px;
+
+    margin: 70px auto;
+
+    padding: 35px 30px;
+
+    text-align: center;
+
+    background: #ffffff;
+
+    border: 1px solid #fecaca;
+
+    border-radius: 15px;
+
+    box-shadow:
+            0 6px 20px
+            rgba(15, 23, 42, 0.05);
+}
+
+.my-votes-error-icon {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin: 0 auto 14px;
+
+    border-radius: 50%;
+
+    background: #fee2e2;
+
+    color: #b91c1c;
+
+    font-size: 18px;
+
+    font-weight: 800;
+}
+
+.my-votes-error h3 {
+    margin: 0 0 7px;
+
+    color: #991b1b;
+
+    font-size: 17px;
+}
+
+.my-votes-error p {
+    margin: 0 0 20px;
+
+    color: #64748b;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+}
+
+.my-votes-error button {
+    padding: 10px 18px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #2563eb;
+
+    color: #ffffff;
+
+    font-size: 13px;
+
+    font-weight: 650;
+
+    cursor: pointer;
+}
+
+.my-votes-error button:hover {
+    background: #1d4ed8;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.my-votes-empty {
+    max-width: 600px;
+
+    margin: 55px auto;
+
+    padding: 50px 30px;
+
+    text-align: center;
+
+    background: #ffffff;
+
+    border: 1px dashed #cbd5e1;
+
+    border-radius: 17px;
+
+    box-shadow:
+            0 4px 15px
+            rgba(15, 23, 42, 0.03);
+}
+
+.empty-votes-icon {
+    width: 62px;
+    height: 62px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin: 0 auto 17px;
+
+    border-radius: 16px;
+
+    background: #eff6ff;
+
+    font-size: 27px;
+}
+
+.my-votes-empty h3 {
+    margin: 0 0 8px;
+
+    color: #111827;
+
+    font-size: 20px;
+}
+
+.my-votes-empty p {
+    max-width: 450px;
+
+    margin: 0 auto 23px;
+
+    color: #64748b;
+
+    font-size: 13px;
+
+    line-height: 1.7;
+}
+
+.my-votes-empty button {
+    min-height: 42px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 0 17px;
+
+    border: 1px solid #2563eb;
+
+    border-radius: 8px;
+
+    background: #2563eb;
+
+    color: #ffffff;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.my-votes-empty button:hover {
+    background: #1d4ed8;
+
+    transform: translateY(-1px);
+}
+
+.my-votes-empty button span {
+    font-size: 16px;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .vote-summary {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .vote-summary .summary-card:last-child {
+        grid-column: span 2;
+    }
+
+    .vote-history-main {
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+    .vote-date-block {
+        grid-column: span 2;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+    .my-votes-header-inner {
+        width: calc(100% - 28px);
+
+        min-height: 64px;
+    }
+
+    .my-votes-brand-icon {
+        width: 36px;
+        height: 36px;
+
+        font-size: 17px;
+    }
+
+    .my-votes-brand h1 {
+        font-size: 19px;
+    }
+
+    .my-votes-back-button {
+        padding: 0 10px;
+
+        font-size: 11px;
+    }
+
+    .my-votes-content {
+        width: calc(100% - 28px);
+
+        padding-top: 25px;
+    }
+
+
+    .my-votes-hero {
+        display: block;
+
+        padding: 27px 24px;
+    }
+
+    .my-votes-hero-icon {
+        display: none;
+    }
+
+    .my-votes-hero h2 {
+        font-size: 29px;
+    }
+
+
+    .vote-summary {
+        grid-template-columns: 1fr;
+
+        gap: 9px;
+    }
+
+    .vote-summary .summary-card:last-child {
+        grid-column: auto;
+    }
+
+
+    .vote-history-section {
+        margin-top: 38px;
+    }
+
+    .vote-history-heading {
+        display: block;
+    }
+
+    .vote-history-count {
+        display: inline-block;
+
+        margin-top: 10px;
+    }
+
+
+    .vote-history-card {
+        align-items: flex-start;
+
+        padding: 15px;
+
+        gap: 12px;
+    }
+
+    .vote-number {
+        width: 32px;
+        height: 32px;
+
+        font-size: 9px;
+    }
+
+    .vote-history-main {
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 13px;
+    }
+
+    .vote-date-block {
+        grid-column: auto;
+    }
+
+    .vote-history-action {
+        display: none;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 420px) {
+
+    .my-votes-header-actions {
+        gap: 5px;
+    }
+
+    .my-votes-hero {
+        padding: 24px 20px;
+    }
+
+    .my-votes-hero h2 {
+        font-size: 26px;
+    }
+
+    .my-votes-hero p {
+        font-size: 12px;
+    }
+
+    .vote-history-heading h3 {
+        font-size: 21px;
+    }
+
+    .vote-history-card {
+        gap: 9px;
+    }
+
+}

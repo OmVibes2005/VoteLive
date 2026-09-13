@@ -326,13 +326,11 @@ function AdminShows() {
                                         <button
                                             className="view-button"
                                             onClick={() =>
-                                                navigate(
-                                                    "/shows/" +
-                                                    show.id
-                                                )
+                                                navigate("/show/" + show.id)
                                             }
                                         >
                                             View Show
+                                            <span>→</span>
                                         </button>
 
                                     </div>

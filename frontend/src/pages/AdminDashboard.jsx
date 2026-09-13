@@ -1,34 +1,61 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import api from "../services/api";
+import LogoutButton from "../components/LogoutButton";
+
 import "./AdminDashboard.css";
+
 
 function AdminDashboard() {
 
     const navigate = useNavigate();
 
+
+    /* =========================================
+       STATE
+    ========================================= */
+
     const [stats, setStats] = useState({
         totalShows: 0,
         activeShows: 0,
         totalContestants: 0,
-        totalVotes: 0
+        totalVotes: 0,
+        totalUsers: 0,
+        votesToday: 0
     });
 
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState("");
+    const [loading, setLoading] =
+        useState(true);
 
-    const userRole = localStorage.getItem("role");
+    const [error, setError] =
+        useState("");
+
+
+    const userRole =
+        localStorage.getItem("role");
+
+
+    /* =========================================
+       FETCH STATISTICS
+    ========================================= */
 
     useEffect(() => {
 
         if (userRole !== "ADMIN") {
+
             setLoading(false);
+
             return;
         }
+
 
         const fetchStats = async () => {
 
             try {
+
+                setLoading(true);
+                setError("");
 
                 const response =
                     await api.get("/admin/stats");
@@ -48,196 +75,396 @@ function AdminDashboard() {
             }
         };
 
+
         fetchStats();
 
     }, [userRole]);
 
+
+    /* =========================================
+       ACCESS DENIED
+    ========================================= */
+
     if (userRole !== "ADMIN") {
 
         return (
+
             <div className="admin-access-denied">
 
-                <h1>Access Denied</h1>
+                <div className="access-denied-card">
 
-                <p>
-                    You do not have permission to access
-                    the admin dashboard.
-                </p>
+                    <div className="access-denied-icon">
+                        🔒
+                    </div>
 
-                <button
-                    onClick={() => navigate("/")}
-                >
-                    Go Home
-                </button>
-
-            </div>
-        );
-    }
-
-    return (
-        <div className="admin-dashboard">
-
-            {/* =========================
-                HEADER
-            ========================= */}
-
-            <header className="admin-header">
-
-                <div>
+                    <span className="admin-eyebrow">
+                        ADMINISTRATION
+                    </span>
 
                     <h1>
-                        VoteLive Admin
+                        Access Denied
                     </h1>
 
                     <p>
-                        Manage shows, contestants and voting
+                        You do not have permission to access
+                        the VoteLive administration dashboard.
                     </p>
+
+                    <button
+                        onClick={() =>
+                            navigate("/")
+                        }
+                    >
+                        ← Go Home
+                    </button>
 
                 </div>
 
-                <button
-                    className="back-button"
-                    onClick={() => navigate("/")}
-                >
-                    Back to Home
-                </button>
+            </div>
+
+        );
+    }
+
+
+    return (
+
+        <div className="admin-dashboard">
+
+
+            {/* =====================================
+                HEADER
+            ===================================== */}
+
+            <header className="admin-header">
+
+                <div className="admin-header-inner">
+
+
+                    {/* BRAND */}
+
+                    <button
+                        className="admin-brand"
+                        onClick={() =>
+                            navigate("/admin")
+                        }
+                    >
+
+                        <span className="admin-brand-icon">
+                            🗳️
+                        </span>
+
+                        <div>
+
+                            <h1>
+                                VoteLive Admin
+                            </h1>
+
+                            <p>
+                                Administration Panel
+                            </p>
+
+                        </div>
+
+                    </button>
+
+
+                    {/* ACTIONS */}
+
+                    <div className="admin-header-actions">
+
+                        <button
+                            className="admin-home-button"
+                            onClick={() =>
+                                navigate("/")
+                            }
+                        >
+                            ← Home
+                        </button>
+
+                        <LogoutButton />
+
+                    </div>
+
+                </div>
 
             </header>
 
 
-            {/* =========================
-                MAIN CONTENT
-            ========================= */}
+            {/* =====================================
+                CONTENT
+            ===================================== */}
 
             <main className="admin-content">
 
-                {/* Welcome */}
+
+                {/* =================================
+                    PAGE INTRO
+                ================================= */}
 
                 <section className="admin-welcome">
 
-                    <h2>
-                        Admin Dashboard
-                    </h2>
+                    <div>
 
-                    <p>
-                        Welcome to the VoteLive administration panel.
-                    </p>
+                        <span className="admin-eyebrow">
+                            ADMINISTRATION
+                        </span>
+
+                        <h2>
+                            Dashboard
+                        </h2>
+
+                        <p>
+                            Monitor and manage the VoteLive
+                            platform from one central location.
+                        </p>
+
+                    </div>
+
+
+                    <div className="admin-welcome-icon">
+                        ⚙️
+                    </div>
 
                 </section>
 
 
-                {/* Error */}
+                {/* =================================
+                    ERROR
+                ================================= */}
 
                 {error && (
 
-                    <div className="error-message">
-                        {error}
+                    <div className="admin-error">
+
+                        <span className="admin-error-icon">
+                            !
+                        </span>
+
+                        <div>
+
+                            <strong>
+                                Unable to load statistics
+                            </strong>
+
+                            <p>
+                                {error}
+                            </p>
+
+                        </div>
+
                     </div>
 
                 )}
 
 
-                {/* =========================
+                {/* =================================
                     STATISTICS
-                ========================= */}
+                ================================= */}
 
-                <section className="stats-grid">
+                <section className="stats-section">
 
-
-                    {/* Total Shows */}
-
-                    <div className="stat-card">
-
-                        <div className="stat-icon">
-                            🎬
-                        </div>
+                    <div className="admin-section-heading">
 
                         <div>
 
-                            <p>
-                                Total Shows
-                            </p>
+                            <span className="admin-eyebrow">
+                                PLATFORM OVERVIEW
+                            </span>
 
                             <h3>
+                                System Statistics
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <div className="stats-grid">
+
+
+                        {/* TOTAL SHOWS */}
+
+                        <div className="stat-card">
+
+                            <div className="stat-card-top">
+
+                                <span className="stat-icon">
+                                    🎬
+                                </span>
+
+                                <span className="stat-label">
+                                    SHOWS
+                                </span>
+
+                            </div>
+
+                            <strong className="stat-value">
+
                                 {loading
                                     ? "—"
                                     : stats.totalShows}
-                            </h3>
+
+                            </strong>
+
+                            <span className="stat-description">
+                                Total shows
+                            </span>
 
                         </div>
 
-                    </div>
 
+                        {/* ACTIVE SHOWS */}
 
-                    {/* Active Shows */}
+                        <div className="stat-card active-stat">
 
-                    <div className="stat-card">
+                            <div className="stat-card-top">
 
-                        <div className="stat-icon">
-                            🟢
-                        </div>
+                                <span className="stat-icon">
+                                    🟢
+                                </span>
 
-                        <div>
+                                <span className="stat-label">
+                                    LIVE
+                                </span>
 
-                            <p>
-                                Active Shows
-                            </p>
+                            </div>
 
-                            <h3>
+                            <strong className="stat-value">
+
                                 {loading
                                     ? "—"
                                     : stats.activeShows}
-                            </h3>
+
+                            </strong>
+
+                            <span className="stat-description">
+                                Active shows
+                            </span>
 
                         </div>
 
-                    </div>
 
+                        {/* CONTESTANTS */}
 
-                    {/* Total Contestants */}
+                        <div className="stat-card">
 
-                    <div className="stat-card">
+                            <div className="stat-card-top">
 
-                        <div className="stat-icon">
-                            👥
-                        </div>
+                                <span className="stat-icon">
+                                    👥
+                                </span>
 
-                        <div>
+                                <span className="stat-label">
+                                    CONTESTANTS
+                                </span>
 
-                            <p>
-                                Total Contestants
-                            </p>
+                            </div>
 
-                            <h3>
+                            <strong className="stat-value">
+
                                 {loading
                                     ? "—"
                                     : stats.totalContestants}
-                            </h3>
+
+                            </strong>
+
+                            <span className="stat-description">
+                                Total contestants
+                            </span>
 
                         </div>
 
-                    </div>
 
+                        {/* VOTES */}
 
-                    {/* Total Votes */}
+                        <div className="stat-card">
 
-                    <div className="stat-card">
+                            <div className="stat-card-top">
 
-                        <div className="stat-icon">
-                            🗳️
-                        </div>
+                                <span className="stat-icon">
+                                    🗳️
+                                </span>
 
-                        <div>
+                                <span className="stat-label">
+                                    VOTES
+                                </span>
 
-                            <p>
-                                Total Votes
-                            </p>
+                            </div>
 
-                            <h3>
+                            <strong className="stat-value">
+
                                 {loading
                                     ? "—"
                                     : stats.totalVotes}
-                            </h3>
+
+                            </strong>
+
+                            <span className="stat-description">
+                                Votes submitted
+                            </span>
+
+                        </div>
+
+
+                        {/* USERS */}
+
+                        <div className="stat-card">
+
+                            <div className="stat-card-top">
+
+                                <span className="stat-icon">
+                                    👤
+                                </span>
+
+                                <span className="stat-label">
+                                    USERS
+                                </span>
+
+                            </div>
+
+                            <strong className="stat-value">
+
+                                {loading
+                                    ? "—"
+                                    : stats.totalUsers}
+
+                            </strong>
+
+                            <span className="stat-description">
+                                Registered users
+                            </span>
+
+                        </div>
+
+
+                        {/* TODAY */}
+
+                        <div className="stat-card today-stat">
+
+                            <div className="stat-card-top">
+
+                                <span className="stat-icon">
+                                    📈
+                                </span>
+
+                                <span className="stat-label">
+                                    TODAY
+                                </span>
+
+                            </div>
+
+                            <strong className="stat-value">
+
+                                {loading
+                                    ? "—"
+                                    : stats.votesToday}
+
+                            </strong>
+
+                            <span className="stat-description">
+                                Votes today
+                            </span>
 
                         </div>
 
@@ -246,85 +473,173 @@ function AdminDashboard() {
                 </section>
 
 
-                {/* =========================
-                    ADMIN MANAGEMENT CARDS
-                ========================= */}
+                {/* =================================
+                    MANAGEMENT
+                ================================= */}
 
-                <section className="admin-cards">
+                <section className="management-section">
 
+                    <div className="admin-section-heading">
 
-                    {/* =========================
-                        SHOWS
-                    ========================= */}
+                        <div>
 
-                    <div className="admin-card">
+                            <span className="admin-eyebrow">
+                                CONTROL CENTER
+                            </span>
 
-                        <h3>
-                            Shows
-                        </h3>
+                            <h3>
+                                Management
+                            </h3>
 
-                        <p>
-                            Create and manage reality shows.
-                        </p>
+                            <p>
+                                Manage shows, contestants and
+                                platform voting.
+                            </p>
 
-                        <button
-                            onClick={() =>
-                                navigate("/admin/shows")
-                            }
-                        >
-                            Manage Shows
-                        </button>
+                        </div>
 
                     </div>
 
 
-                    {/* =========================
-                        CONTESTANTS
-                    ========================= */}
-
-                    <div className="admin-card">
-
-                        <h3>
-                            Contestants
-                        </h3>
-
-                        <p>
-                            Add and manage contestants.
-                        </p>
-
-                        <button
-                            onClick={() =>
-                                navigate("/admin/contestants")
-                            }
-                        >
-                            Manage Contestants
-                        </button>
-
-                    </div>
+                    <div className="admin-cards">
 
 
-                    {/* =========================
-                        VOTING
-                    ========================= */}
+                        {/* SHOWS */}
 
-                    <div className="admin-card">
+                        <article className="admin-card">
 
-                        <h3>
-                            Voting
-                        </h3>
+                            <div className="admin-card-icon">
+                                🎬
+                            </div>
 
-                        <p>
-                            Start or stop voting and monitor
-                            live results.
-                        </p>
+                            <div className="admin-card-content">
 
-                        <button
-                            onClick={() =>
-                                navigate("/admin/voting")
-                            }
-                        >
-                            Manage Voting
-                        </button>
+                                <h3>
+                                    Shows
+                                </h3>
+
+                                <p>
+                                    Create, update and manage
+                                    reality shows.
+                                </p>
+
+                            </div>
+
+                            <button
+                                onClick={() =>
+                                    navigate("/admin/shows")
+                                }
+                            >
+                                Manage Shows
+                                <span>→</span>
+                            </button>
+
+                        </article>
+
+
+                        {/* CONTESTANTS */}
+
+                        <article className="admin-card">
+
+                            <div className="admin-card-icon">
+                                👥
+                            </div>
+
+                            <div className="admin-card-content">
+
+                                <h3>
+                                    Contestants
+                                </h3>
+
+                                <p>
+                                    Add, edit and manage
+                                    show contestants.
+                                </p>
+
+                            </div>
+
+                            <button
+                                onClick={() =>
+                                    navigate(
+                                        "/admin/contestants"
+                                    )
+                                }
+                            >
+                                Manage Contestants
+                                <span>→</span>
+                            </button>
+
+                        </article>
+
+
+                        {/* VOTING */}
+
+                        <article className="admin-card">
+
+                            <div className="admin-card-icon voting-icon">
+                                🟢
+                            </div>
+
+                            <div className="admin-card-content">
+
+                                <h3>
+                                    Voting
+                                </h3>
+
+                                <p>
+                                    Start or stop voting and
+                                    monitor live results.
+                                </p>
+
+                            </div>
+
+                            <button
+                                onClick={() =>
+                                    navigate(
+                                        "/admin/voting"
+                                    )
+                                }
+                            >
+                                Manage Voting
+                                <span>→</span>
+                            </button>
+
+                        </article>
+
+
+                        {/* VOTE MANAGEMENT */}
+
+                        <article className="admin-card">
+
+                            <div className="admin-card-icon">
+                                🗳️
+                            </div>
+
+                            <div className="admin-card-content">
+
+                                <h3>
+                                    Vote Management
+                                </h3>
+
+                                <p>
+                                    Review submitted votes
+                                    across the platform.
+                                </p>
+
+                            </div>
+
+                            <button
+                                onClick={() =>
+                                    navigate(
+                                        "/admin/votes"
+                                    )
+                                }
+                            >
+                                View All Votes
+                                <span>→</span>
+                            </button>
+
+                        </article>
 
                     </div>
 
@@ -335,5 +650,6 @@ function AdminDashboard() {
         </div>
     );
 }
+
 
 export default AdminDashboard;

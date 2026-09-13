@@ -39,12 +39,15 @@ function AdminVoting() {
 
 
     // ==========================================
-    // UPDATE ANALYTICS FROM RESULTS
+    // UPDATE ANALYTICS
     // ==========================================
 
     const updateAnalyticsFromResults = (updatedResults) => {
 
-        if (!updatedResults || updatedResults.length === 0) {
+        if (
+            !updatedResults ||
+            updatedResults.length === 0
+        ) {
 
             setAnalytics({
                 totalVotes: 0,
@@ -57,7 +60,6 @@ function AdminVoting() {
             return;
         }
 
-        // Calculate total votes
 
         const totalVotes =
             updatedResults.reduce(
@@ -68,28 +70,25 @@ function AdminVoting() {
             );
 
 
-        // Find highest vote count
-
         const highestVotes =
             Math.max(
                 ...updatedResults.map(
                     result =>
-                        Number(result.voteCount || 0)
+                        Number(
+                            result.voteCount || 0
+                        )
                 )
             );
 
 
-        // Find ALL contestants with highest votes
-
         const leaders =
             updatedResults.filter(
                 result =>
-                    Number(result.voteCount || 0) ===
-                    highestVotes
+                    Number(
+                        result.voteCount || 0
+                    ) === highestVotes
             );
 
-
-        // Create leader name string
 
         const leaderNames =
             leaders
@@ -100,13 +99,9 @@ function AdminVoting() {
                 .join(" & ");
 
 
-        // First leader is used for ID
-
         const firstLeader =
             leaders[0];
 
-
-        // Calculate leader percentage
 
         const leadingPercentage =
             totalVotes === 0
@@ -119,8 +114,6 @@ function AdminVoting() {
                 ) * 100
             ) / 100;
 
-
-        // Update analytics
 
         setAnalytics({
 
@@ -254,24 +247,7 @@ function AdminVoting() {
                     showId
                 );
 
-            /*
-             * We primarily calculate analytics
-             * from the complete result list so
-             * ties are handled correctly.
-             */
-
-            if (results.length > 0) {
-
-                updateAnalyticsFromResults(
-                    results
-                );
-
-            } else {
-
-                setAnalytics(
-                    response.data
-                );
-            }
+            setAnalytics(response.data);
 
         } catch (error) {
 
@@ -284,7 +260,7 @@ function AdminVoting() {
 
 
     // ==========================================
-    // LOAD SHOWS ON PAGE LOAD
+    // LOAD SHOWS
     // ==========================================
 
     useEffect(() => {
@@ -316,16 +292,19 @@ function AdminVoting() {
             return;
         }
 
+
         const show =
             shows.find(
-                (item) =>
+                item =>
                     String(item.id) ===
                     String(selectedShowId)
             );
 
+
         setSelectedShow(
             show || null
         );
+
 
         fetchResults(
             selectedShowId
@@ -363,10 +342,6 @@ function AdminVoting() {
                 },
 
 
-                // ==================================
-                // CONNECTED
-                // ==================================
-
                 onConnect: () => {
 
                     console.log(
@@ -392,15 +367,10 @@ function AdminVoting() {
                                     );
 
 
-                                // Update result list
-
                                 setResults(
                                     updatedResults
                                 );
 
-
-                                // Update analytics
-                                // with tie handling
 
                                 updateAnalyticsFromResults(
                                     updatedResults
@@ -418,10 +388,6 @@ function AdminVoting() {
                 },
 
 
-                // ==================================
-                // DISCONNECTED
-                // ==================================
-
                 onDisconnect: () => {
 
                     console.log(
@@ -431,10 +397,6 @@ function AdminVoting() {
                     setIsLive(false);
                 },
 
-
-                // ==================================
-                // STOMP ERROR
-                // ==================================
 
                 onStompError: (frame) => {
 
@@ -446,10 +408,6 @@ function AdminVoting() {
                     setIsLive(false);
                 },
 
-
-                // ==================================
-                // WEBSOCKET ERROR
-                // ==================================
 
                 onWebSocketError: (error) => {
 
@@ -468,10 +426,6 @@ function AdminVoting() {
 
         client.activate();
 
-
-        // ==========================================
-        // CLEANUP
-        // ==========================================
 
         return () => {
 
@@ -624,9 +578,7 @@ function AdminVoting() {
             <main className="admin-voting-content">
 
 
-                {/* ==================================
-                    SUCCESS MESSAGE
-                ================================== */}
+                {/* SUCCESS */}
 
                 {message && (
 
@@ -637,9 +589,7 @@ function AdminVoting() {
                 )}
 
 
-                {/* ==================================
-                    ERROR MESSAGE
-                ================================== */}
+                {/* ERROR */}
 
                 {error && (
 
@@ -702,8 +652,6 @@ function AdminVoting() {
 
                     </div>
 
-
-                    {/* SELECTED SHOW */}
 
                     {selectedShow && (
 
@@ -775,8 +723,6 @@ function AdminVoting() {
                 <section className="analytics-section">
 
 
-                    {/* TOTAL VOTES */}
-
                     <div className="analytics-card">
 
                         <div className="analytics-icon">
@@ -797,8 +743,6 @@ function AdminVoting() {
 
                     </div>
 
-
-                    {/* CURRENT LEADER */}
 
                     <div className="analytics-card">
 
@@ -824,8 +768,6 @@ function AdminVoting() {
                     </div>
 
 
-                    {/* LEADER VOTES */}
-
                     <div className="analytics-card">
 
                         <div className="analytics-icon">
@@ -846,8 +788,6 @@ function AdminVoting() {
 
                     </div>
 
-
-                    {/* LEADER PERCENTAGE */}
 
                     <div className="analytics-card">
 
@@ -873,7 +813,125 @@ function AdminVoting() {
 
 
                 {/* ==================================
-                    RESULTS
+                    VOTE DISTRIBUTION CHART
+                ================================== */}
+
+                <section className="chart-section">
+
+                    <div className="chart-header">
+
+                        <div>
+
+                            <div className="chart-title-row">
+
+                                <h2>
+                                    Vote Distribution
+                                </h2>
+
+                                {isLive && (
+
+                                    <span className="live-indicator">
+
+                                        <span className="live-dot">
+                                        </span>
+
+                                        LIVE
+
+                                    </span>
+
+                                )}
+
+                            </div>
+
+                            <p>
+                                Vote share by contestant
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    {results.length === 0 ? (
+
+                        <div className="chart-empty">
+
+                            <div className="chart-empty-icon">
+                                📊
+                            </div>
+
+                            <h3>
+                                No votes yet
+                            </h3>
+
+                            <p>
+                                Vote distribution will appear
+                                here once voting begins.
+                            </p>
+
+                        </div>
+
+                    ) : (
+
+                        <div className="distribution-chart">
+
+                            {results.map((result) => (
+
+                                <div
+                                    className="distribution-row"
+                                    key={result.contestantId}
+                                >
+
+                                    <div className="distribution-info">
+
+                                        <span className="distribution-name">
+                                            {result.contestantName}
+                                        </span>
+
+                                        <span className="distribution-value">
+                                            {result.voteCount}{" "}
+                                            {Number(result.voteCount) === 1
+                                                ? "vote"
+                                                : "votes"}
+                                            {" • "}
+                                            {result.votePercentage}%
+                                        </span>
+
+                                    </div>
+
+
+                                    <div className="distribution-bar-container">
+
+                                        <div
+                                            className="distribution-bar"
+                                            style={{
+                                                width:
+                                                    Math.max(
+                                                        Number(
+                                                            result.votePercentage || 0
+                                                        ),
+                                                        result.voteCount > 0
+                                                            ? 2
+                                                            : 0
+                                                    ) + "%"
+                                            }}
+                                        />
+
+                                    </div>
+
+                                </div>
+
+                            ))}
+
+                        </div>
+
+                    )}
+
+                </section>
+
+
+                {/* ==================================
+                    LIVE RESULTS
                 ================================== */}
 
                 <section className="results-section">
@@ -888,7 +946,6 @@ function AdminVoting() {
                                 <h2>
                                     Live Voting Results
                                 </h2>
-
 
                                 {isLive && (
 
@@ -921,9 +978,6 @@ function AdminVoting() {
                                     selectedShowId
                                 );
 
-                                fetchAnalytics(
-                                    selectedShowId
-                                );
 
                             }}
                         >
@@ -933,14 +987,11 @@ function AdminVoting() {
                     </div>
 
 
-                    {/* LOADING */}
-
                     {loadingResults ? (
 
                         <div className="loading">
                             Loading results...
                         </div>
-
 
                     ) : results.length === 0 ? (
 
@@ -949,7 +1000,6 @@ function AdminVoting() {
                             No voting results available.
 
                         </div>
-
 
                     ) : (
 
@@ -965,16 +1015,12 @@ function AdminVoting() {
                                     <div className="result-main">
 
 
-                                        {/* RANK */}
-
                                         <div className="rank">
 
                                             #{result.rank}
 
                                         </div>
 
-
-                                        {/* CONTESTANT */}
 
                                         <div className="contestant-result">
 
@@ -1000,8 +1046,6 @@ function AdminVoting() {
                                             </div>
 
 
-                                            {/* PROGRESS BAR */}
-
                                             <div className="progress-container">
 
                                                 <div
@@ -1017,8 +1061,6 @@ function AdminVoting() {
 
                                         </div>
 
-
-                                        {/* VOTE NUMBERS */}
 
                                         <div className="vote-numbers">
 
